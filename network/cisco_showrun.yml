@@ -1,0 +1,14 @@
+---
+    - hosts: 9.181.48.93
+      tasks:
+      - name: show run
+        ios_command:
+          authorize: yes
+          commands:
+            - show configuration
+        register: output
+
+      - name: save output to file
+        copy:
+          content: "{{output.stdout[0]}}"
+          dest: "show_run_{{inventory_hostname}}.txt"

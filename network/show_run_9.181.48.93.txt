@@ -1,0 +1,152 @@
+Using 1484 out of 33554432 bytes
+!
+! Last configuration change at 16:03:38 CST Wed Sep 4 2019 by bob
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname CSR-001
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$3f89$YhkcW0..mySZhM7eBlZ9W/
+!
+no aaa new-model
+clock timezone CST 8 0
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+
+no ip domain lookup
+ip domain name cn.ibm.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 94K7TV7114P
+!
+spanning-tree extend system-id
+!
+username bob secret 5 $1$F3YD$2QzTJrRoAtAbqsWRitToH.
+username test secret 5 $1$dQgh$nY8bUIDx0lHbq.VW5Zx0m0
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface GigabitEthernet1
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet2
+ description LAN
+ ip address 9.181.48.93 255.255.255.192
+ negotiation auto
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+!
+router ospf 1
+ passive-interface GigabitEthernet2
+ network 9.181.48.93 0.0.0.0 area 0
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 9.181.48.65
+ip ssh version 2
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+end
